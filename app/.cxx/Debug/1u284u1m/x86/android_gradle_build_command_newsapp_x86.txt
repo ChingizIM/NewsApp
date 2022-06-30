@@ -1,0 +1,7 @@
+Executable : C:\Users\LENOVO\AppData\Local\Android\Sdk\cmake\3.18.1\bin\ninja.exe
+arguments : 
+-C
+D:\NewsApp\app\.cxx\Debug\1u284u1m\x86
+newsapp
+jvmArgs : 
+

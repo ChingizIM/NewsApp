@@ -1,0 +1,2 @@
+ninja: Entering directory `D:\NewsApp\app\.cxx\Debug\1u284u1m\x86'
+ninja: no work to do.
