@@ -1,10 +1,12 @@
 package com.example.newsapp.ui.board
 
 import android.os.Bundle
+import android.system.Os.close
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.newsapp.R
@@ -13,6 +15,7 @@ import com.example.newsapp.databinding.FragmentBoardBinding
 class BoardFragment : Fragment() {
 
     private lateinit var binding: FragmentBoardBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,33 +28,42 @@ class BoardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = BoardAdapter {
-
             findNavController().navigateUp()
-        }
-        val viewPager = binding.viewPager
+        } // skip
+        binding.viewPager.adapter = adapter //skip
+
+        val dotsIndicator = binding.indicator
+        val viewPager = binding.viewPager //skip
+        dotsIndicator.setViewPager2(viewPager) // индикатор
+
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int
+                positionOffsetPixels: Int //skip//
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 if (position == 2) {
-                    binding.btnSkip.visibility = View.INVISIBLE
+                    binding.btnSkip.visibility = View.INVISIBLE //исчезает на третьей странице
                 } else {
-                    binding.btnSkip.visibility = View.VISIBLE
-                }
+                    binding.btnSkip.visibility = View.VISIBLE // виден на первых двух страницах
+                } // skip //
 
                 //super.onPageScrollStateChanged(state)
             }
         })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    requireActivity()
+                }
+            }
+        )
+
         binding.btnSkip.setOnClickListener {
-
+            findNavController().navigateUp() //skip //
         }
-
-        //requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : onBackPressedCallback(true) {
-        //requireActivity().finish()
-
     }
 }
 

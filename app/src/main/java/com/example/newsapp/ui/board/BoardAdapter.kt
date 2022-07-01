@@ -9,6 +9,7 @@ import com.example.newsapp.databinding.PagerBoardBinding
 import com.example.newsapp.ui.home.NewsAdapter
 
 class BoardAdapter(private val onClickStart: ()-> Unit) : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
+
     private val titles = arrayListOf("Салам", "Привет", "Hello")
     private val images = arrayListOf (R.drawable.ic_1, R.drawable.ic_2, R.drawable.ic_3)
 
