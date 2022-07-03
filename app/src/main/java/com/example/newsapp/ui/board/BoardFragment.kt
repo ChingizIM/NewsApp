@@ -1,7 +1,6 @@
 package com.example.newsapp.ui.board
 
 import android.os.Bundle
-import android.system.Os.close
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.example.newsapp.R
+import com.example.newsapp.Prefs
 import com.example.newsapp.databinding.FragmentBoardBinding
 
 class BoardFragment : Fragment() {
@@ -28,8 +27,12 @@ class BoardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = BoardAdapter {
+                Prefs(requireContext()).saveState(toString())
+            // Prefs(requireContext) - создали экземпляр класса
+            // saveState() - вызвали его метод
             findNavController().navigateUp()
-        } // skip
+            // реакция на нажатие кнопки "START", "SKIP"
+        }
         binding.viewPager.adapter = adapter //skip
 
         val dotsIndicator = binding.indicator
@@ -40,7 +43,7 @@ class BoardFragment : Fragment() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int //skip//
+                positionOffsetPixels: Int //skip.. registerOnPageChangeCallback слушатель, какая страница сейчас открывается
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 if (position == 2) {

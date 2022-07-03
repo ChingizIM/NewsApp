@@ -33,7 +33,7 @@ class NewsAdapter(private val onClick:(position: Int) -> Unit): RecyclerView.Ada
         holder.itemView.setOnClickListener{
             onClick(position)}
 
-           if(position % 2 == 0)
+           if(position % 2 == 0) // зебра
             //{
                 holder.itemView.setBackgroundColor(Color.GRAY);
 

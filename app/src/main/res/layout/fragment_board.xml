@@ -31,8 +31,6 @@
         android:id="@+id/indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-
         app:dotsSize="18dp"
         app:dotsSpacing="12dp"
         app:dotsWidthFactor="2"
