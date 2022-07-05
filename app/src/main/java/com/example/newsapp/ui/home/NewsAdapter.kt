@@ -59,6 +59,11 @@ class NewsAdapter(private val onClick:(position: Int) -> Unit): RecyclerView.Ada
        // notifyItemInserted(list.size - 1)
       // notifyItemInserted(list.indexOf(news))
     }
+    fun addItems(list: List<News>) {
+        this.list.addAll(list)
+        notifyDataSetChanged()
+        // метод для отображения записи (list)
+    }
 
     fun getItem(pos: Int): News {
      return list[pos]
@@ -67,6 +72,7 @@ class NewsAdapter(private val onClick:(position: Int) -> Unit): RecyclerView.Ada
         list.set(poss,news)
         notifyItemChanged(poss)
     }
+
 
     inner class ViewHolder(private var binding : ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(news: News) {
@@ -92,4 +98,6 @@ class NewsAdapter(private val onClick:(position: Int) -> Unit): RecyclerView.Ada
 
         }
 
-    }
+
+
+}

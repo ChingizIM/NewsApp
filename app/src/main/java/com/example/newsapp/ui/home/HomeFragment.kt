@@ -14,9 +14,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.navigation.fragment.findNavController
+import com.example.newsapp.App
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentHomeBinding
 import com.example.newsapp.models.News
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.lang.Appendable
+import java.text.FieldPosition
 import java.time.LocalDate
 import java.time.LocalDateTime
 import kotlin.concurrent.timer
@@ -27,6 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: NewsAdapter
     private var bolean:Boolean=false
+    //private val adapter = NewsAdapter(this::onClick, this::onLongClock)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +44,10 @@ class HomeFragment : Fragment() {
             bolean=true
             findNavController().navigate(R.id.newsFragment, bundle)
         }
+        val list= App.database.newsDao().getAll()
+        // в list-е будут все записи, чтобы записи отображались, мы должны list передать NewsAdapter-у
+        adapter.addItems(list)
+        // Далее переходим в NewsAdapter
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,6 +94,23 @@ class HomeFragment : Fragment() {
       //  newItem: SVGTransform,
         //index: Int
     // ): SVGTransform
+
+    //private fun onClick(position: Int) {
+      //  val news = adapter.getItem(position)
+        //Toast.makeText(requireContext()),position.toString
+   // }
+   // private fun onLongClock(news: News){
+      //  MaterialAlertDialogBuilder(requireContext())
+        //    .setTitle("Notification")
+          //  .setMessage("Вы уверены, что хотите удалить?")
+            //.setNegativeButton("Отмена") { dialog, which ->
+            //}
+            //.setPositiveButton("Удалить") { dialog, which ->
+              //  App.database.newsDao().deleteItem(news)
+                //adapter.addItem(App.database.newsDao().sortAll())
+            //}
+            //.show()
+    //}
 
     override fun onDestroyView() {
         super.onDestroyView()

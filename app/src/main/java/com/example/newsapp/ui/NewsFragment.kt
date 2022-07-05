@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.newsapp.App
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentHomeBinding
 import com.example.newsapp.databinding.FragmentNewsBinding
@@ -42,7 +43,9 @@ class NewsFragment : Fragment() {
         val text = binding.editText.text.toString().trim()
 
         if (news == null) {
-            news = News(text, System.currentTimeMillis())
+            news = News(0,text, System.currentTimeMillis())
+            App.database.newsDao().insert(news!!)
+            // Теперь идем в NewsDao и создаем метод для чтения информаци
         }else{
                 news?.title=text
         }
