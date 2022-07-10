@@ -1,6 +1,7 @@
 package com.example.newsapp.room
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.newsapp.models.News
@@ -15,7 +16,16 @@ interface NewsDao {
     @Insert
     fun insert(news: News)
 
+    @Delete
     fun deleteItem(news: News)
-    fun sortAll(): News
+
+    @Query("SELECT * FROM news ORDER BY createdAt DESC")
+    fun sortAll(): List<News>
+
+    @Query("SELECT * FROM news WHERE title LIKE '%'|| :search || '%'")
+    fun getSearch(search: String?): List<News>
+   // @Query("SELECT * FROM news ORDER BY title ASC")
+    // fun sort(): List<News>
+    //fun sortAll(): News
     // @Insert - Выполняет запись модельки(news) в таблицу
 }

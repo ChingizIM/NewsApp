@@ -13,52 +13,58 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class NewsAdapter(private val onClick:(position: Int) -> Unit): RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+class NewsAdapter(private val onClick: (position: Int) -> Unit) :
+    RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
 
-    private val list = mutableListOf<News>()
+    var onItemLongClick: ((i: Int) -> Unit)? = null
+    private val list = arrayListOf<News>()
+    private var boolean: Boolean = false
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemNewsBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false))
+        return ViewHolder(
+            ItemNewsBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.bind(list[position])
-        holder.itemView.setOnClickListener{
-            onClick(position)}
+        holder.itemView.setOnClickListener {
+            onClick(position)
+        }
 
-           if(position % 2 == 0) // зебра
-            //{
-                holder.itemView.setBackgroundColor(Color.GRAY);
+        if (position % 2 == 0) // зебра
+        //{
+            holder.itemView.setBackgroundColor(Color.GRAY);
 
-                //holder.rootView.setBackgroundResource(R.color.black);
-                //holder.setBackgroundColor(R.color.black)
-                //myView.setBackgroundColor(R.color.black) }
-            else
-                //holder.rootView.setBackgroundColor(Color.WHITE);
-                holder.itemView.setBackgroundColor(Color.WHITE);
+        //holder.rootView.setBackgroundResource(R.color.black);
+        //holder.setBackgroundColor(R.color.black)
+        //myView.setBackgroundColor(R.color.black) }
+        else
+        //holder.rootView.setBackgroundColor(Color.WHITE);
+            holder.itemView.setBackgroundColor(Color.WHITE);
     }
-
-
 
 
     override fun getItemCount() = list.size
     fun addItem(news: News) {
 
-        list.add(0,news)
-       notifyItemInserted(0)
+        list.add(0, news)
+        notifyItemInserted(0)
 
         notifyItemInserted(list.indexOf(news))
 
-       // notifyItemInserted(list.size - 1)
-      // notifyItemInserted(list.indexOf(news))
+        // notifyItemInserted(list.size - 1)
+        // notifyItemInserted(list.indexOf(news))
     }
+
     fun addItems(list: List<News>) {
         this.list.addAll(list)
         notifyDataSetChanged()
@@ -66,15 +72,25 @@ class NewsAdapter(private val onClick:(position: Int) -> Unit): RecyclerView.Ada
     }
 
     fun getItem(pos: Int): News {
-     return list[pos]
+        return list[pos]
     }
-    fun replaceItem(news: News,poss:Int){
-        list.set(poss,news)
+
+    fun replaceItem(news: News, poss: Int) {
+        list.set(poss, news)
         notifyItemChanged(poss)
     }
 
 
-    inner class ViewHolder(private var binding : ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private var binding: ItemNewsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnLongClickListener {
+                onItemLongClick?.invoke(adapterPosition)
+                true
+            }
+        }
+
         fun bind(news: News) {
 
 
@@ -83,21 +99,34 @@ class NewsAdapter(private val onClick:(position: Int) -> Unit): RecyclerView.Ada
             binding.textLong.text = convertingToTime(news.createdAt)
 
 
-
-        //if (adapterPosition%2==0){
-          //  binding.itemNews.setBackgroundColor(Color.BLACK)
+            //if (adapterPosition%2==0){
+            //  binding.itemNews.setBackgroundColor(Color.BLACK)
             //binding.textTitle.setTextColor(Color.WHITE)
             //binding.textLong.setTextColor(Color.WHITE)
         }
 
-            }
-        private fun convertingToTime(time: Long): String {
-            val date = Date(time)
-            val format = SimpleDateFormat("HH:mm, dd MMM yyyy")
-            return format.format(date)
+    }
 
-        }
+    private fun convertingToTime(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("HH:mm, dd MMM yyyy")
+        return format.format(date)
 
+    }
+
+    fun removeItem(it: Any) {
+
+
+    }
+
+    fun addList(list: ArrayList<News>) {
+
+    }
+
+    fun deleteItem(poss: Int) {
+        list.removeAt(poss)
+        notifyItemRemoved(poss)
+    }
 
 
 }

@@ -1,7 +1,10 @@
 package com.example.newsapp.ui.home
 
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,8 +32,9 @@ import kotlin.math.log
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter: NewsAdapter
+    private lateinit var adapter : NewsAdapter
     private var bolean:Boolean=false
+    private var list = arrayListOf<News>()
     //private val adapter = NewsAdapter(this::onClick, this::onLongClock)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +48,7 @@ class HomeFragment : Fragment() {
             bolean=true
             findNavController().navigate(R.id.newsFragment, bundle)
         }
+
         val list= App.database.newsDao().getAll()
         // в list-е будут все записи, чтобы записи отображались, мы должны list передать NewsAdapter-у
         adapter.addItems(list)
@@ -61,6 +66,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         Log.e("Home", "onViewCreated")
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.newsFragment)
@@ -70,17 +76,11 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner
         ) { requestkey, bundle ->
             val news = bundle.getSerializable("news") as News
-            val poss:Int?=null
-            if(bolean) {
+            val poss: Int? = null
+            if (bolean) {
                 poss?.let { adapter.replaceItem(news, it) }
-            }else {
+            } else {
                 adapter.addItem(news)
-                //val list1 = replaceItem(
-                //  oldValue: String,
-                // newValue: String,
-                //ignoreCase: Boolean = false
-                //): String
-                //)
             }
 
             Log.e("Home", "text ${news.title} ${news.createdAt}")
@@ -88,32 +88,44 @@ class HomeFragment : Fragment() {
         }
 
 
-        binding.recyclerview.adapter = adapter
-    }
-    //fun replaceItem(
-      //  newItem: SVGTransform,
-        //index: Int
-    // ): SVGTransform
+        binding.recyclerView.adapter = adapter
+        adapter.onItemLongClick = {
+            createAlertDialog(it)
 
-    //private fun onClick(position: Int) {
-      //  val news = adapter.getItem(position)
-        //Toast.makeText(requireContext()),position.toString
-   // }
-   // private fun onLongClock(news: News){
-      //  MaterialAlertDialogBuilder(requireContext())
-        //    .setTitle("Notification")
-          //  .setMessage("Вы уверены, что хотите удалить?")
-            //.setNegativeButton("Отмена") { dialog, which ->
-            //}
-            //.setPositiveButton("Удалить") { dialog, which ->
-              //  App.database.newsDao().deleteItem(news)
-                //adapter.addItem(App.database.newsDao().sortAll())
-            //}
-            //.show()
-    //}
+            binding.etSearch.addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    list = App.database.newsDao().getSearch(s.toString()) as ArrayList<News>
+                    adapter.addList(list)
+                }
+            })
+            binding.recyclerView.adapter = adapter
+            list = App.database.newsDao().sortAll() as ArrayList<News>
+            adapter.addList(list)
+        }
+    }
+    private fun createAlertDialog(it:Int) {
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle("Внимание!")
+        builder.setMessage("Вы уверены, что хотите удалить?")
+        builder.setPositiveButton("Удалить") { _, _ ->
+            val news = adapter.getItem(it)
+            adapter.deleteItem(it)
+            App.database.newsDao().deleteItem(news)
+            adapter.notifyDataSetChanged()
+        }
+        builder.setNegativeButton("Отмена") { _, _ ->
+        }
+        builder.show()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        //   binding = null
+
     }
 }

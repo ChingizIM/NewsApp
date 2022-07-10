@@ -9,5 +9,5 @@ abstract class AppDadaBase : RoomDatabase() {
     abstract fun newsDao(): NewsDao
     // @Database - Третий компонет
     // Чтобы записать запись в базу, нам нужно вызвать AppDataBase, у него будет newsDao, а у него Insert(которая принимает запись)
-    // И для этого мы должны создать(вызвать) AppDataBase в App(application-приложение)
+    // И для этого мы должны создать(вызвать) AppDataBase в App(application-приложение) 
 }
