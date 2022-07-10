@@ -11,7 +11,7 @@ import com.example.newsapp.ui.home.NewsAdapter
 class BoardAdapter(private val onClickStart: ()-> Unit) : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
 
     private val titles = arrayListOf("Салам", "Привет", "Hello")
-    private val images = arrayListOf (R.drawable.ic_1, R.drawable.ic_2, R.drawable.ic_3)
+    private val images = arrayListOf (R.raw.pervaya, R.raw.vtoraya, R.raw.treteya)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -42,7 +42,8 @@ class BoardAdapter(private val onClickStart: ()-> Unit) : RecyclerView.Adapter<B
                 onClickStart()
 
             }
-            binding.imageView.setImageResource(images[position])
+            binding.imageView.imageAssetsFolder = "images"
+            binding.imageView.setAnimation(images[position])
             }
         }
     }

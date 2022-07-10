@@ -34,6 +34,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnImageView.setOnClickListener {
             getContent.launch("image/*")
+
         }
             // binding.editTextProfile.addTextChangedListener(object : TextWatcher {
             //override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -60,6 +61,7 @@ class ProfileFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             Glide.with(binding.btnImageView).load(uri).centerCrop().into(binding.btnImageView)
         }
+
 }
 
 

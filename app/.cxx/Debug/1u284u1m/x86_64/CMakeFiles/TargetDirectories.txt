@@ -1,0 +1,3 @@
+D:/NewsApp/app/.cxx/Debug/1u284u1m/x86_64/CMakeFiles/rebuild_cache.dir
+D:/NewsApp/app/.cxx/Debug/1u284u1m/x86_64/CMakeFiles/newsapp.dir
+D:/NewsApp/app/.cxx/Debug/1u284u1m/x86_64/CMakeFiles/edit_cache.dir

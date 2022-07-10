@@ -1,0 +1,3 @@
+D:/NewsApp/app/.cxx/RelWithDebInfo/3v6q6h52/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+D:/NewsApp/app/.cxx/RelWithDebInfo/3v6q6h52/armeabi-v7a/CMakeFiles/newsapp.dir
+D:/NewsApp/app/.cxx/RelWithDebInfo/3v6q6h52/armeabi-v7a/CMakeFiles/edit_cache.dir

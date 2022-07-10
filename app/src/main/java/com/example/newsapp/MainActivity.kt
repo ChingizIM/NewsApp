@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        if (!Prefs(this).iShown())
+            //if (!Prefs(this).iShown())
             //если onBoard не показан, запусти boardFragment
         navController.navigate(R.id.boardFragment)
             // Запуск boardFragment

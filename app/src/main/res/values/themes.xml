@@ -12,12 +12,20 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
     </style>
     <style name="TextViewSecondary" parent="Theme.NewsApp">
         <item name="android:backgroundStacked">@color/gray_dove_light</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">10dp</item>
 
     </style>
 
     <color name="gray_dove_light">#4D4C4C</color>
+
+
 
 </resources>

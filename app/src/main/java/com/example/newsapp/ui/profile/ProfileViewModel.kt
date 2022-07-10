@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 class ProfileViewModel: ViewModel() {
     private val _image = MutableLiveData<String>().apply {
         value="This is Gallery"
+
     }
     val text: LiveData<String> = _image
+
 }
