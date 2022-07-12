@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.newsapp.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +40,12 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        if (FirebaseAuth.getInstance().currentUser == null)
+        navController.navigate(R.id.loginFragment) //Запуск страницы для авторизации
+        //FirebaseAuth - хранит информацию об авторизации
+        // currentUser - получить текущего юзера
+
 
             //if (!Prefs(this).iShown())
             //если onBoard не показан, запусти boardFragment
